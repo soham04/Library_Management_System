@@ -11,6 +11,16 @@ class Login:
     __username = ""
     __password = ""
     __n = 1
+    __userType = True  # true for admin and false for student
+
+    def getUserType(self):
+        return self.__userType
+
+    def getUsername(self):
+        return self.__username
+
+    def getPassword(self):
+        return self.__password
 
     def __search_username(self, username):
         command1 = "select Aid, Password from Admin where Aid=%s"
@@ -41,9 +51,11 @@ class Login:
             return False
         else:
             if len(admin) > 1:
-                admin.start_admin()
+                self.__userType = True
             else:
-                student.start_student()
+                self.__userType = False
+
+            self.__win1.destroy()
             return True
 
     def __next_or_login(self):
@@ -99,6 +111,10 @@ class Login:
             self.__login_input.place(relx=0.5, rely=0.5 + 0.08, anchor=CENTER)
             # onclick_id = self.__login_input.bind('<Button-1>', self.__placeholder())
             self.__n = 1
+
+    def __del__(self):
+        self.__cur1.close()
+        self.__con1.close()
 
     def __init__(self):
 
@@ -172,5 +188,4 @@ class Login:
 
         self.__win1.mainloop()
 
-
-obj = Login()
+# obj = Login()
